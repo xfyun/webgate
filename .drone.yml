@@ -1,0 +1,104 @@
+﻿workspace:
+    base: /go
+    path: src/git.xfyun.cn/AIaaS/webgate-aipaas
+pipeline:
+#    code_analysis:
+#          image: 172.16.59.153/xfyun/drone-sonar:20190113
+#          commands:
+#            - go_sonar --help
+#            - go_sonar ${DRONE_REPO} vendor/\**,aclient_example/\**,tests/\**,auth/\**,benchmark/\**,*/*_test.go
+#          when:
+#            event: push
+
+    build:
+       image: hub.iflytek.com/aiaas/golang:1.17.4
+       commands:
+         - pwd && ls
+         #- go mod init "git.xfyun.cn/AIaaS/webgate-ws"
+       #  - go build -v -mod=vendor
+         - go version
+         - export GOPATH=/go
+         - go build -v -o webgate-aipaas
+#         - go build -v -o webgate-http-aipaas -tags phttp
+
+    publish_server_ws:
+       image: plugins/docker
+       secrets: [ docker_username,docker_password ]
+       registry: hub.iflytek.com
+       repo: hub.iflytek.com/aiaas/webgate-aipaas
+       tags:
+          - latest
+       dockerfile: Dockerfile
+       insecure: true
+       when:
+          event: push
+
+
+    publish_release_ws:
+       image: plugins/docker
+       secrets: [ docker_username,docker_password ]
+       registry: hub.iflytek.com
+       repo: hub.iflytek.com/aiaas/webgate-aipaas
+       tags: [ "${DRONE_TAG}" ]
+       dockerfile: Dockerfile
+       insecure: true
+       when:
+          event: tag
+
+
+#    publish_server_http:
+#      image: plugins/docker
+#      secrets: [ docker_username,docker_password ]
+#      registry: hub.iflytek.com
+#      repo: hub.iflytek.com/aiaas/webgate-http-aipaas
+#      tags:
+#        - latest
+#      dockerfile: Dockerfile_http
+#      insecure: true
+#      when:
+#        event: push
+#
+#
+#    publish_release_http:
+#      image: plugins/docker
+#      secrets: [ docker_username,docker_password ]
+#      registry: hub.iflytek.com
+#      repo: hub.iflytek.com/aiaas/webgate-http-aipaas
+#      tags: [ "${DRONE_TAG}" ]
+#      dockerfile: Dockerfile_http
+#      insecure: true
+#      when:
+#        event: tag
+#    deploy_dev:
+#       image: hub.xfyun.cn/yqzhang9/kubectl:test
+#       commands:
+#       - mkdir -p /root/.kube && cp kube/config-dev /root/.kube/config
+#       #- sed -i "s/\$DRONE_TAG/${DRONE_COMMIT}/g"  deployment.yml
+#       #- sed -i "s/\$DRONE_TAG/${DRONE_COMMIT}/g"  deployment.yml
+#      # - sed -i "s/\$NAMESPACE/webgate-ws-test/g"   deployment.yml
+#       - kubectl delete -f deployment.yml || true
+#       - sleep 5
+#       - kubectl apply -f deployment.yml
+#       - sleep 60
+
+#    bvt_dev:
+#       image: 172.16.59.153/aiaas/webgate-bvt:025c3dd846541bec0d4e9158f4b4f541cd510422
+#       commands:
+#       - cd /opt/bvt
+#       - pwd && ls
+#       - ./iatbvt -url ws://10.1.87.70:8000/v2/iat -key 88c3834437402ae1e88d9b95fd4146c4 -secret 7lkm0gQKVEn7g94azteEhhy8EH4gqimY -appid igrdail
+#
+#    autokit_result:
+#        image: 172.16.59.153/xfyun/devops-golang:iflytek
+#        commands:
+#          - autobvt2 ${DRONE_REPO} ${DRONE_BUILD_NUMBER} ${DRONE_COMMIT_AUTHOR} ${DRONE_BUILD_LINK}
+#          - autokit ${DRONE_REPO_NAME} ${DRONE_REPO_NAME} ${DRONE_COMMIT_AUTHOR} ${DRONE_BUILD_CREATED} ${DRONE_BUILD_LINK} ${DRONE_PREV_BUILD_STATUS}
+#        when:
+#          status:  [ success, failure ]
+#
+#    report_result:
+#        image: 172.16.59.153/xfyun/devops-golang:iflytek
+#        commands:
+#          - report_email sjliu7@iflytek.com ${DRONE_REPO} ${DRONE_BUILD_NUMBER} ${DRONE_COMMIT} ${DRONE_BUILD_LINK}
+#        when:
+#          status:  [ success, failure ]

@@ -1,0 +1,40 @@
+[server]
+#host = "10.1.107.8"    # 和xsf.toml中要保持一致
+netCard = ""
+port = "8200"
+mock = false
+pipe_depth=5
+enable_sonar = true
+#ignore_sonar_codes = [10101,10223]
+ignore_resp_codes= [10101]
+[auth]
+enable_auth=false   #是否开启鉴 权
+max_date_interval=300   #鉴权时间校验偏差
+enable_appid_check=true
+[xsf]
+from="webgate-ws"
+#server_port="9027"    # xsf server端口   和xsg.toml要保持一致
+location="dx"
+call_retry=2    #xsf
+enable_respsort=false #对响应结果排序
+hash_services = ["guider"]
+dc="dx"
+[session]
+scan_interver=60     #全局session扫描时间
+timeout_interver=20   #消息发送超时间隔
+conn_timeout=90
+handshake_timeout=4  #handshake 超时时间
+session_timeout= 6000000 #session超时时间
+session_close_wait=5
+
+[log]
+file="/log/server/webgate-ws.log"
+level="error"
+size=100   #max log size :MB
+count=10  #max log file num
+caller=true #控制日志是否刷行号
+batch=100 #刷日志的最小条数
+async = true      #是否启用异步日志。1是0否。缺省1。
+[schema]
+enable=true  #是否开启schema校验
+services=["ist"]

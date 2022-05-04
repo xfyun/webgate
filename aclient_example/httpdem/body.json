@@ -1,0 +1,28 @@
+{
+  "header": {
+    "app_id": "100IME",
+    "uid": "3976979589",
+    "did": "SR08232194000020",
+    "imei": "866402031869366",
+    "imsi": "460026495272910",
+    "mac": "6c:92:bf:65:c6:14",
+    "net_type": "wifi",
+    "net_isp": "CMCC",
+    "status": 1,
+    "request_id": null
+  },
+  "parameter": {
+    "xist": {
+
+    }
+  },
+  "payload": {
+    "audio": {
+      "encoding": "lame",
+      "status": 2,
+      "audio": "aGVlbA=="
+    }
+  }
+}
+
+

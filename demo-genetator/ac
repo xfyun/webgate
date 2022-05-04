@@ -1,0 +1,36 @@
+JsonObject req = new JsonObject();
+// build header
+JsonObject header = new JsonObject();
+{{ range $h:=.Header -}}
+	header.addProperty("{{$h.Name}}",{{$h.Value}})
+{{- end }}
+
+// generater parameter
+JsonObject parameter = new JsonObject();
+{{ range $p:=.Parameter}}
+JsonObject parameter_{{$p.Name}} = new JsonObject()
+{{ range $pf:=$p.Fields}}
+parameter_{{$p.Name}}.addProperty("{{$pf.Name}}",{{$pf.Value}})
+{{- end}}
+JsonObject accept = new JsonObject()
+{{ range $ac:=$p.Accepts}}
+accept.addProperty("{{ac.Name}}",{{ac.Value}})
+{{- end}}
+parameter.add("{{$p.Name}}",parameter_{{$p.Name}})
+parameter.add("{{$p.AcceptName}}",accept)
+{{- end}}
+
+// generate payload
+JsonObject payload = new JsonObject()
+{{ range $py:=$p.Payload}}
+JsonObject {{$py.Name}} = new JsonObject()
+
+{{ range $in:=$py.Fields}}
+{{$py.Name}}.addProperty("{{$in.Name}}",{{$in.Value}})
+{{- end}}
+payload.add("{{$py.Name}}", {{$py.Name}})
+{{- end}}
+
+req.add("header",header);
+req.add("parameter",parameter);
+req.add("payload",payload);
