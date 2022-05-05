@@ -145,7 +145,7 @@ var (
 	group    = flag.String("group", "hu", "config center group")
 	service  = flag.String("service", "webgate-ws-aipaas", "config center service")
 	version  = flag.String("version", "0.1.0", "deprecated | config center version")
-	url      = flag.String("url", "http://10.1.87.70:6868", "config center companionUrl")
+	url      = flag.String("url", "http://172.16.59.17:30868", "config center companionUrl")
 	cfg      = flag.String("cfg", "app.toml", "name of config file")
 	BootMode = flag.Bool("nativeBoot", false, "boot from native config ")
 )
