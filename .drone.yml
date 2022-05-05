@@ -25,7 +25,7 @@ pipeline:
        image: plugins/docker
        secrets: [ docker_username,docker_password ]
        registry: hub.iflytek.com
-       repo: hub.iflytek.com/aiaas/webgate-aipaas
+       repo: hub.iflytek.com/aiaas/webgate-open
        tags:
           - latest
        dockerfile: Dockerfile
