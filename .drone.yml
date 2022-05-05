@@ -26,7 +26,7 @@ pipeline:
        image: plugins/docker
        secrets: [ docker_username,docker_password ]
        registry: hub.iflytek.com
-       repo: hub.iflytek.com/aiaas/webgate-open
+       repo: hub.iflytek.com/aipaas/webgate-open
        tags:
           - latest
        dockerfile: Dockerfile
@@ -39,7 +39,7 @@ pipeline:
        image: plugins/docker
        secrets: [ docker_username,docker_password ]
        registry: hub.iflytek.com
-       repo: hub.iflytek.com/aiaas/webgate-aipaas
+       repo: hub.iflytek.com/aipaas/webgate-aipaas
        tags: [ "${DRONE_TAG}" ]
        dockerfile: Dockerfile
        insecure: true
