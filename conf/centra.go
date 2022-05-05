@@ -83,23 +83,23 @@ func InitConfigFromCentra() (b []byte) {
 	LoadSchemaConf("schema", confInst.Schema.FileServce, confInst.Schema.FileVersion, confInst.Schema.FilePrefix, func(b []byte) error {
 		return schemas.LoadAISchema(b)
 	})
-	LoadSchemaConf("guider-schema", confInst.GuiderSchema.FileServce, confInst.GuiderSchema.FileVersion, confInst.GuiderSchema.FilePrefix, func(b []byte) error {
-		return schemas.LoadGuiderSchema(b)
-	})
-	LoadSchemaConf("engine_schema", confInst.EngineSchema.FileServce, confInst.EngineSchema.FileVersion, confInst.EngineSchema.FilePrefix, func(b []byte) error {
-		return schemas.LoadEngineSchema(b)
-	})
+	//LoadSchemaConf("guider-schema", confInst.GuiderSchema.FileServce, confInst.GuiderSchema.FileVersion, confInst.GuiderSchema.FilePrefix, func(b []byte) error {
+	//	return schemas.LoadGuiderSchema(b)
+	//})
+	//LoadSchemaConf("engine_schema", confInst.EngineSchema.FileServce, confInst.EngineSchema.FileVersion, confInst.EngineSchema.FilePrefix, func(b []byte) error {
+	//	return schemas.LoadEngineSchema(b)
+	//})
+	////
+	//LoadSchemaConf("domain cloud_id ref", confInst.DomainCloudId.FileServce, confInst.DomainCloudId.FileVersion, confInst.DomainCloudId.FilePrefix, func(b []byte) error {
+	//	return schemas.UpdateCloudRef(b)
+	//})
+	//LoadSchemaConf("app_id cloud_id ref", confInst.AppIdCloudId.FileServce, confInst.AppIdCloudId.FileVersion, confInst.AppIdCloudId.FilePrefix, func(b []byte) error {
+	//	return schemas.UpdateAppConf(b)
+	//})
 	//
-	LoadSchemaConf("domain cloud_id ref", confInst.DomainCloudId.FileServce, confInst.DomainCloudId.FileVersion, confInst.DomainCloudId.FilePrefix, func(b []byte) error {
-		return schemas.UpdateCloudRef(b)
-	})
-	LoadSchemaConf("app_id cloud_id ref", confInst.AppIdCloudId.FileServce, confInst.AppIdCloudId.FileVersion, confInst.AppIdCloudId.FilePrefix, func(b []byte) error {
-		return schemas.UpdateAppConf(b)
-	})
-
-	LoadSchemaConf("category_schema", confInst.CategorySchema.FileServce, confInst.CategorySchema.FileVersion, confInst.CategorySchema.FilePrefix, func(b []byte) error {
-		return schemas.LoadAISchema(b)
-	})
+	//LoadSchemaConf("category_schema", confInst.CategorySchema.FileServce, confInst.CategorySchema.FileVersion, confInst.CategorySchema.FilePrefix, func(b []byte) error {
+	//	return schemas.LoadAISchema(b)
+	//})
 	return
 }
 
