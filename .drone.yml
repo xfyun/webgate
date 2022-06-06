@@ -11,7 +11,7 @@ pipeline:
 #            event: push
 
     build:
-       image: artifacts.iflytek.com/docker-private/aiaas/golang:1.17.4
+       image: artifacts.iflytek.com/docker-private/golang:1.16.4
        commands:
          - pwd && ls
          #- go mod init "git.xfyun.cn/AIaaS/webgate-ws"
