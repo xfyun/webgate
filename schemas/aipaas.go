@@ -1,6 +1,7 @@
 package schemas
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/seeadoog/jsonschema"
 	"github.com/xfyun/webgate-aipaas/common"
@@ -492,7 +493,7 @@ func (m Meta) resolveDataListResp(datalist []*pb.GeneralData, outPutSchema *Json
 		dataType := generalData.GetMeta().GetDataType()
 		//payload[name] =
 		data := make(map[string]interface{})
-		data[getRespDataKeyByDataType(dataType)] = common.EncodingTobase64String(generalData.GetData())
+		data[getRespDataKeyByDataType(dataType)] = m.formatData(generalData.GetMeta().GetAttribute(), generalData.GetData())
 		attrs := outPutSchema.Get("properties").Get("payload").Get("properties").Get(name).Get("properties")
 		for key, val := range generalData.GetMeta().GetAttribute() {
 			typ, ok := attrs.Get(key).Get("type").GetAsString()
@@ -590,6 +591,20 @@ func (s *AISchema) Init() error {
 	return nil
 }
 
+func (m Meta) formatData(desc map[string]string, data []byte) interface{} {
+	if desc == nil {
+		return common.EncodingTobase64String(data)
+	}
+
+	format := desc["format"]
+	if format == "json" {
+		if json.Valid(data) {
+			return JsonRawString(data)
+		}
+	}
+	return common.EncodingTobase64String(data)
+}
+
 func (s *AISchema) BuildResponseHeader(headers map[string]string) map[string]interface{} {
 	if headers == nil || !s.Meta.BuildHeader() {
 		return nil
@@ -609,4 +624,10 @@ func (s *AISchema) BuildResponseHeader(headers map[string]string) map[string]int
 }
 
 type Request struct {
+}
+
+type JsonRawString []byte
+
+func (j JsonRawString) MarshalJSON() ([]byte, error) {
+	return []byte(j), nil
 }
